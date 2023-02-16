@@ -4,22 +4,30 @@
     <input type="email" required placeholder="email" v-model="email">
     <input type="password" required placeholder="password" v-model="password">
     <button>Sign up</button>
+    <div class="error">{{ error }}</div>
   </form>
 </template>
 
 <script>
 import { ref } from '@vue/reactivity'
+import useSignup from '../composables/useSignup'
+
 export default {
-    setup(){
+    setup(props, context){
         const displayName = ref('');
         const email = ref('');
         const password = ref('');
 
-        const handleSubmit = () => {
-            console.log(displayName.value, email.value, password.value);
+        const { error, signup } = useSignup()
+
+        const handleSubmit = async () => {
+            await signup(email.value, password.value, displayName.value);
+            if(!error.value){
+                context.emit('signup');
+            }
         }
 
-        return { displayName, email, password, handleSubmit }
+        return { displayName, email, password, handleSubmit, error };
     }
 }
 </script>
