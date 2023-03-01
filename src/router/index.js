@@ -10,14 +10,24 @@ const requireAuth = (to, from, next) => {
   } else {
     next()
   }
-  console.log('current user is auth guard: ', user);
+
+}
+
+const reqireNoAuth = (to, from, next) => {
+  let user = projectAuth.currentUser
+  if(user){
+    next({ name : 'Chatroom'})
+  } else {
+    next()
+  }
 }
 
 const routes = [
   {
     path: '/',
     name: 'Welcome',
-    component: Welcome
+    component: Welcome,
+    beforeEnter: reqireNoAuth
   },
   {
     path: '/chatroom',
