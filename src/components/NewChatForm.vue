@@ -26,7 +26,8 @@ export default {
             const chat = {
                 name: user.value.displayName,
                 message: message.value,
-                createdAt: timestamp()
+                createdAt: timestamp(),
+                color: user.value.photoURL
             }
 
             

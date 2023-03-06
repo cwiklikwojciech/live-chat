@@ -4,12 +4,14 @@ import { projectFirestore } from "@/firebase/config";
 const getCollection = (collection) => {
     const documents = ref(null);
     const error = ref(null);
+    const users = ref(null);
 
     let collectionRef = projectFirestore.collection(collection)
         .orderBy('createdAt')
 
     const unsub = collectionRef.onSnapshot((snap) => {
         let results = [];
+
         snap.docs.forEach(doc => {
             doc.data().createdAt && results.push({ ...doc.data(), id: doc.id })
         })
@@ -23,7 +25,7 @@ const getCollection = (collection) => {
         onInvalidate(() => unsub())
     })
 
-    return { documents, error };
+    return { documents, error, users };
 }
 
 export default getCollection

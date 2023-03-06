@@ -2,13 +2,12 @@
     <div class="chat-window">
         <div v-if="error">{{ error }}</div>
         <div v-if="documents" class="messages" ref="messages">
-          <!-- <button @click="testScroll">Test</button> -->
             <div v-for="doc in formattedDocuments" :key="doc.id" class="single">
                 <span class="created-at">{{ doc.createdAt }}</span>
                 <span class="name">{{ doc.name }}</span>
                 <span class="messages">{{ doc.message }}</span>
             </div>
-        </div>
+        </div>  
     </div>
 </template>
 
@@ -20,15 +19,16 @@ export default {
     setup(){
         const { error, documents } = getCollection('messages');
         const messages = ref(null);
-       
+        
         onUpdated(() => {
           messages.value.scrollTop = messages.value.scrollHeight;
         })
  
         const formattedDocuments = computed(() => {
             if(documents.value){
+              console.log(documents.value)
                 return documents.value.map(doc => {
-                    let time = formatDistanceToNow(doc.createdAt.toDate())
+                    let time = formatDistanceToNow(doc.createdAt.toDate());
                     return { ...doc, createdAt: time }
                 })
             }
