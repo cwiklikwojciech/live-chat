@@ -1,19 +1,30 @@
-# live-chat
+# Vue Firebase Live Chat Example
+Let's learn vue with firebase database  🚀
 
-## Project setup
-```
-npm install
-```
+This project created when i learn Vue. This project is Live Chat with firebase database
+## Technology
+Vue JS -  [https://vuejs.org](https://vuejs.org/)
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+Firebase -  [https://firebase.google.com](https://firebase.google.com/)
+## Installation
+`git clone https://github.com/cwiklikwojciech/PersonalBlog.git`
 
-### Compiles and minifies for production
-```
-npm run build
-```
+`cd PersonalBlog`
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+The firebase config located at src/config/config.js
+
+`npm install`
+
+## Run Project
+
+`npm run serve`
+
+## Functionalities from course
+- Signup
+- Login
+- Chat window
+
+## My own ideas and implementation 
+- display users as circle with random color
+- chat 1on1
+- chat with all, chat 1on1
