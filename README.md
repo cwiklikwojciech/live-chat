@@ -25,6 +25,6 @@ The firebase config located at src/config/config.js
 - Chat window
 
 ## My own ideas and implementation 
-- display users as circle with random color
-- chat 1on1
-- chat with all, chat 1on1
+- Display users as circle with random color
+- Chat 1on1
+- Chat with all, chat 1on1
