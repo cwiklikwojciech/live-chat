@@ -14,12 +14,14 @@ import { ref } from '@vue/reactivity'
 import getUser from '@/composables/getUser';
 import { timestamp } from '../firebase/config'
 import useCollection from '@/composables/useCollection';
+import createPath from '@/composables/createPath';
 
 export default {
-    setup(){
+    props:['id'],
+    setup(props){
         const { user } = getUser();
-        const { addDoc, error } = useCollection('messages');
-
+        const path = createPath(props.id, user.value.displayName);
+        const { addDoc, error } = useCollection(path);
         const message = ref('');
 
         const handleSubmit = async () => {

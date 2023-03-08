@@ -1,5 +1,6 @@
 <template>
     <div class="chat-window">
+        <p>{{ formattedId }}</p>
         <div v-if="error">{{ error }}</div>
         <div v-if="documents" class="messages" ref="messages">
             <div v-for="doc in formattedDocuments" :key="doc.id" class="single">
@@ -15,18 +16,27 @@
 import getCollection from '../composables/getCollection'
 import { formatDistanceToNow } from 'date-fns'
 import { computed, ref, onUpdated } from '@vue/runtime-core';
+import getUser from '@/composables/getUser';
+import createPath from '@/composables/createPath';
+
 export default {
-    setup(){
-        const { error, documents } = getCollection('messages');
+    props:['id'],
+    setup(props){
+        const { user } = getUser();
+        const path = createPath(props.id, user.value.displayName);
+        const { error, documents } = getCollection(path);
         const messages = ref(null);
-        
+
         onUpdated(() => {
           messages.value.scrollTop = messages.value.scrollHeight;
+        })
+        
+        const formattedId = computed(() => {
+            return path;
         })
  
         const formattedDocuments = computed(() => {
             if(documents.value){
-              console.log(documents.value)
                 return documents.value.map(doc => {
                     let time = formatDistanceToNow(doc.createdAt.toDate());
                     return { ...doc, createdAt: time }
@@ -34,7 +44,7 @@ export default {
             }
         })
         
-        return { error, documents, formattedDocuments, scroll, messages }
+        return { error, documents, formattedDocuments, scroll, messages ,formattedId }
     }
 }
 </script>

@@ -2,7 +2,9 @@
     <div>Users</div>
     <span v-for="doc in formattedDocuments" :key="doc.id" class="single">
         <span class="dot" :style="{'background-color':doc.color}" @click="handleClick(doc.name)">
-            {{ doc.name.charAt(0).toUpperCase() }}
+            <router-link class="link" :to="{ name: `Chatroom`, params: { id: doc.name}}">
+                {{ doc.name.charAt(0).toUpperCase() }}
+            </router-link>
         </span>
     </span>
     <div></div>
@@ -11,14 +13,16 @@
 <script>
 import getCollection from '../composables/getCollection'
 import getUser from '@/composables/getUser';
+import createPath from '@/composables/createPath';
 import { computed } from 'vue';
 export default {
-    setup(){
-        const { error, documents } = getCollection('messages');
-      
+    props:['id'],
+    setup(props){
+        const { user } = getUser();
+        const path = createPath(props.id, user.value.displayName);
+        const { error, documents } = getCollection(path);
         const formattedDocuments = computed(() => {
             if(documents.value){
-                console.log([...new Map(documents.value.map(item => [item['name'], item])).values()]);
                 return [...new Map(documents.value.map(item => [item['name'], item])).values()];
             }
         })
@@ -26,8 +30,6 @@ export default {
         const handleClick = (x) => {
             console.log("click",x);
         }
-        
-        console.log(formattedDocuments);
 
         return { formattedDocuments, handleClick }
     }
@@ -42,5 +44,8 @@ export default {
   display: inline-block;
   margin: 3px;
   font-size: 40px;
+}
+.link{
+    text-decoration: none;
 }
 </style>

@@ -24,9 +24,9 @@ export default {
     setup(){
         const showLogin = ref(true);
         const router = useRouter();
-
         const enterChat = () => {
-          router.push({ name: 'Chatroom'})
+          const all = 'all';
+          router.push({ name: 'Chatroom', params: { id: all }})
         }
         
         return { showLogin, enterChat}
